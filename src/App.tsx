@@ -1,9 +1,16 @@
-import { useState } from "react";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from "./pages/Home/Home";
 
-function App() {
-  const [count, setCount] = useState(0);
-
-  return <></>;
-}
-
+const App: React.FC = () => {
+  return (
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route path="/" Component={Home} />
+        </Switch>
+      </div>
+    </Router>
+  );
+};
 export default App;
