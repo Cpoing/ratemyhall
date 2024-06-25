@@ -6,11 +6,11 @@ const SearchBar: React.FC = () => {
   const [input, setInput] = useState("");
 
   // making fake api calls
-  const fetchData = (value) => {
+  const fetchData = (value: string) => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
       .then((json) => {
-        const results = json.filter((user) => {
+        const results = json.filter((user: { name: string }) => {
           return user && user.name && user.name.toLowerCase().includes(value);
         });
         console.log(results);

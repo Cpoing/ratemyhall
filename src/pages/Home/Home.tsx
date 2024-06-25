@@ -9,21 +9,14 @@ const buildings = [
   {
     id: "1",
     name: "PSE 210",
-    image: "TODO: IMPORT THE IMAGE HERE",
-    rating: 4.5,
+    rating: 4,
     reviews: 12,
-    description: "Spacious and modern",
-    tags: ["Chargers", "Cold"],
   },
   {
     id: "2",
     name: "LAS B",
-    image: "TODO: IMPORT THE IMAGE HERE",
-    rating: 4.0,
+    rating: 4,
     reviews: 24,
-    description:
-      "State-of-the-art facilities for engineering students, very large lecture halls and comfortable seats",
-    tags: ["Spacious", "Chargers", "Hot"],
   },
 ];
 
@@ -37,7 +30,13 @@ const Home: React.FC = () => {
       </div>
       <div className="building-list">
         {buildings.map((building) => (
-          <BuildingCard key={building.id} hall={building} />
+          <BuildingCard
+            key={building.id}
+            id={building.id}
+            name={building.name}
+            rating={building.rating}
+            reviews={building.reviews}
+          />
         ))}
       </div>
       <Footer />
