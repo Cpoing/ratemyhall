@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import BuildingCard from "../../components/BuildingCard/BuildingCard";
 import "./Home.css";
@@ -23,7 +21,6 @@ const buildings = [
 const Home: React.FC = () => {
   return (
     <div className="home-page">
-      <Header />
       <div className="search-section">
         <h1>Enter your building or Lecture Hall</h1>
         <SearchBar />
@@ -39,7 +36,6 @@ const Home: React.FC = () => {
           />
         ))}
       </div>
-      <Footer />
     </div>
   );
 };
