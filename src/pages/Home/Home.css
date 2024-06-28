@@ -7,10 +7,15 @@
 }
 
 .search-section {
-  margin-top: 20px;
+  margin-top: 70px;
 }
 
 .building-list {
   width: 80%;
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
 }

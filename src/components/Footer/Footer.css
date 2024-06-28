@@ -12,6 +12,7 @@
   position: fixed;
   bottom: 0;
   box-sizing: border-box;
+  height: 70px;
 }
 
 .footer-links {
