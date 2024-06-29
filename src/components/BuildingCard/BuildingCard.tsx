@@ -18,7 +18,7 @@ const BuildingCard: React.FC<BuildingCardProps> = ({
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/reviews/${id}`);
+    navigate(`/building/${id}/${encodeURIComponent(name)}`);
   };
 
   return (

@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import BuildingCard from "../../components/BuildingCard/BuildingCard";
+import { Link } from "react-router-dom";
 import "./Home.css";
 
 const buildings = [
   {
-    id: "1",
+    id: 1,
     name: "PSE 210",
     rating: 4,
     reviews: 12,
   },
   {
-    id: "2",
+    id: 2,
     name: "LAS B",
     rating: 4,
     reviews: 24,
