@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./BuildingCard.css";
 
 interface BuildingCardProps {
-  id: string;
+  id: number;
   name: string;
   rating: number;
   reviews: number;

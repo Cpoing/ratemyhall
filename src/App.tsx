@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import SearchResults from "./pages/searchResults/searchResults";
 
 const App: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const App: React.FC = () => {
         <div className="content">
           <Routes>
             <Route path="/" Component={Home} />
+            <Route path="/search" Component={SearchResults} />
           </Routes>
         </div>
         <Footer />
