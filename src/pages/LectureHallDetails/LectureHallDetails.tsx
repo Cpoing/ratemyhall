@@ -1,9 +1,10 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./LectureHallDetails.css";
 
 const LectureHallDetails: React.FC = () => {
   const { name } = useParams<{ name: string }>();
+  const navigate = useNavigate();
 
   const reviews = [
     { user: "User 1", rating: 4, text: "Great hall, comfortable seats." },
@@ -11,11 +12,17 @@ const LectureHallDetails: React.FC = () => {
     { user: "User 3", rating: 4, text: "Good acoustics." },
   ];
 
+  const handleClick = () => {
+    navigate(`/add-review/${name}`);
+  };
+
   return (
     <div className="Lecture-hall-details">
       <div className="lecture-wrapper">
         <h1>{name}</h1>
-        <button className="add-review-button">Add Review</button>
+        <button className="add-review-button" onClick={handleClick}>
+          Add Review
+        </button>
         <div className="reviews">
           {reviews.map((review, index) => (
             <div key={index} className="review-card">

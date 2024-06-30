@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import SearchResults from "./pages/searchResults/searchResults";
 import LectureHallDetails from "./pages/LectureHallDetails/LectureHallDetails";
+import AddReview from "./pages/addReview/addReview";
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
             <Route path="/" Component={Home} />
             <Route path="/search" Component={SearchResults} />
             <Route path="/building/:id/:name" Component={LectureHallDetails} />
+            <Route path="/add-review/:name" Component={AddReview} />
           </Routes>
         </div>
         <Footer />
