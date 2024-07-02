@@ -52,7 +52,7 @@
 
 textarea {
   width: 70%;
-  height: 400px;
+  height: 200px;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -63,6 +63,21 @@ textarea {
   text-align: right;
   font-size: 0.9rem;
   color: #888;
+}
+
+.image-upload-container {
+  width: 20%;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-upload-container input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .submit-review-btn {
@@ -77,4 +92,42 @@ textarea {
 
 .submit-review-btn:hover {
   background-color: #0056b3;
+}
+
+.upload-button {
+  background-color: #7e7e7e;
+}
+
+.upload-button:hover {
+  background-color: #3f3f3f;
+}
+
+.image-preview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 5px;
+}
+
+.remove-button {
+  padding: 10px 15px;
+  background-color: white;
+  color: red;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  padding: 10px;
+}
+
+.remove-button:hover {
+  background-color: white;
+}
+
+.upload-button {
+  position: relative;
+  margin-left: 0 auto;
+  padding: 10px;
 }

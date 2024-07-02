@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 const AddReview: React.FC = () => {
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(0);
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleRatingChange = (value: number) => {
@@ -22,6 +24,7 @@ const AddReview: React.FC = () => {
       const newReview = {
         rating,
         review,
+        image,
         user: "Current User", // Replace with actual user data later
       };
 
@@ -32,6 +35,24 @@ const AddReview: React.FC = () => {
     } else {
       alert("Please provide a rating and review text.");
     }
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      setImage(file);
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleImageRemove = () => {
+    setImage(null);
+    setImagePreview(null);
   };
 
   return (
@@ -63,6 +84,31 @@ const AddReview: React.FC = () => {
           maxLength={200}
         />
         <div className="word-count">{review.split(" ").length}/200</div>
+      </div>
+      <div className="image-upload-container">
+        {imagePreview && (
+          <img src={imagePreview} alt="Preview" className="image-preview" />
+        )}
+        <input
+          type="file"
+          id="image-upload"
+          accept="image/*"
+          onChange={handleImageChange}
+          style={{ display: "none" }}
+        />
+        <div className="image-button-container">
+          <button
+            className="upload-button"
+            onClick={() => document.getElementById("image-upload")?.click()}
+          >
+            Choose File
+          </button>
+          {image && (
+            <button className="remove-button" onClick={handleImageRemove}>
+              X
+            </button>
+          )}
+        </div>
       </div>
       <button className="submit-review-btn" onClick={handleSubmit}>
         Submit Review
