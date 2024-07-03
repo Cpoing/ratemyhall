@@ -6,6 +6,8 @@ import Footer from "./components/Footer/Footer";
 import SearchResults from "./pages/searchResults/searchResults";
 import LectureHallDetails from "./pages/LectureHallDetails/LectureHallDetails";
 import AddReview from "./pages/addReview/addReview";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 const App: React.FC = () => {
   return (
@@ -14,10 +16,15 @@ const App: React.FC = () => {
         <Header />
         <div className="content">
           <Routes>
-            <Route path="/" Component={Home} />
-            <Route path="/search" Component={SearchResults} />
-            <Route path="/building/:id/:name" Component={LectureHallDetails} />
-            <Route path="/add-review/:name" Component={AddReview} />
+            <Route path="/" element={<Home />} />
+            <Route path="/search" element={<SearchResults />} />
+            <Route
+              path="/building/:id/:name"
+              element={<LectureHallDetails />}
+            />
+            <Route path="/add-review/:name" element={<AddReview />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </div>
         <Footer />
