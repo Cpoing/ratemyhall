@@ -1,15 +1,32 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./LectureHallDetails.css";
+//dummy images below, remove later
+import reviewhall from "../../images/reviewhall.png";
+import deepPurple from "../../images/Deep Purple.jpg";
 
 const LectureHallDetails: React.FC = () => {
   const { name } = useParams<{ name: string }>();
   const navigate = useNavigate();
 
   const reviews = [
-    { user: "User 1", rating: 4, text: "Great hall, comfortable seats." },
-    { user: "User 2", rating: 3, text: "Average, could be better." },
-    { user: "User 3", rating: 4, text: "Good acoustics." },
+    {
+      user: "User 1",
+      rating: 4,
+      text: "Great hall, comfortable seats.",
+      imageUrl: reviewhall,
+    },
+    {
+      user: "User 2",
+      rating: 3,
+      text: "Average, could be better.",
+      imageUrl: deepPurple,
+    },
+    {
+      user: "User 3",
+      rating: 4,
+      text: "Meh",
+    },
   ];
 
   const handleClick = () => {
@@ -26,11 +43,20 @@ const LectureHallDetails: React.FC = () => {
         <div className="reviews">
           {reviews.map((review, index) => (
             <div key={index} className="review-card">
-              <div className="review-header">
-                <h3>{review.user}</h3>
-                <div className="review-rating">⭐ {review.rating}/5</div>
+              {review.imageUrl && (
+                <img
+                  src={review.imageUrl}
+                  alt="Review"
+                  className="review-image"
+                />
+              )}
+              <div className="review-content">
+                <div className="review-header">
+                  <h3>{review.user}</h3>
+                  <div className="review-rating">⭐ {review.rating}/5</div>
+                </div>
+                <p>{review.text}</p>
               </div>
-              <p>{review.text}</p>
             </div>
           ))}
         </div>

@@ -37,20 +37,34 @@ h1 {
 }
 
 .review-card {
+  display: flex;
+  align-items: flex-start;
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
   background-color: #f9f9f9;
 }
-
+.review-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+}
 .review-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
 }
 
 .review-rating {
   font-size: 1rem;
   color: gold;
+  width: auto;
+}
+
+.review-image {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 20px;
 }
