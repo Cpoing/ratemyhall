@@ -3,9 +3,11 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const secret = "n1iu2rfj891n931309fjesdf3903912ujf";
 
 app.use(cors());
 
@@ -31,6 +33,9 @@ app.post("/api/register", async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: "Username, email," });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -42,6 +47,26 @@ app.post("/api/register", async (req, res) => {
 
     await newUser.save();
     res.status(201).json({ message: "User registered successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.post("/api/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    res.status(200).json({ message: "Login successful" });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }

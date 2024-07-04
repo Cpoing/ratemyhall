@@ -2,11 +2,16 @@
   padding: 0;
   margin: 0;
 }
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
 
 html,
 body,
 #root {
   height: 100%;
+  padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -16,6 +21,8 @@ body,
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 .content {
