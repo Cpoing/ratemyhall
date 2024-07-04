@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./LectureHallDetails.css";
+import ImageModal from "../../components/ImageModal/ImageModal";
 //dummy images below, remove later
 import reviewhall from "../../images/reviewhall.png";
 import deepPurple from "../../images/Deep Purple.jpg";
 
 const LectureHallDetails: React.FC = () => {
   const { name } = useParams<{ name: string }>();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const reviews = [
@@ -33,6 +35,14 @@ const LectureHallDetails: React.FC = () => {
     navigate(`/add-review/${name}`);
   };
 
+  const handleImageClick = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedImage(null);
+  };
+
   return (
     <div className="Lecture-hall-details">
       <div className="lecture-wrapper">
@@ -48,6 +58,7 @@ const LectureHallDetails: React.FC = () => {
                   src={review.imageUrl}
                   alt="Review"
                   className="review-image"
+                  onClick={() => handleImageClick(review.imageUrl)}
                 />
               )}
               <div className="review-content">
@@ -61,6 +72,9 @@ const LectureHallDetails: React.FC = () => {
           ))}
         </div>
       </div>
+      {selectedImage && (
+        <ImageModal imageUrl={selectedImage} onClose={handleCloseModal} />
+      )}
     </div>
   );
 };
