@@ -38,17 +38,24 @@
 
 .nav .welcome {
   font-size: 1rem;
-  margin-right: 10px;
+  margin-right: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.logout-button {
+.nav .logout-button {
   background: transparent;
   color: white;
   border: none;
   cursor: pointer;
   font-size: 1rem;
+  margin-bottom: 0px;
+  font: inherit;
+  padding-right: 10px;
 }
 
 .logout-button:hover {
-  text-decoration: underline;
+  color: #f0db4f;
 }
