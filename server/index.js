@@ -4,15 +4,30 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 const app = express();
+app.use(cookieParser());
 const PORT = process.env.PORT || 3000;
 const dotenv = require("dotenv").config({ path: "../.env" });
-app.use(cors());
+const corsOptions = {
+  credentials: true,
+  origin: "http://localhost:5173",
+};
+app.use(cors(corsOptions));
 
 mongoose.connect(process.env.VITE_MONGOOSE_URI);
 
 app.use(bodyParser.json());
+
+const reviewSchema = new mongoose.Schema({
+  hallName: { type: String, required: true },
+  rating: { type: Number, required: true },
+  text: { type: String, required: true },
+  image: { type: String },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  date: { type: Date, default: Date.now },
+});
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -21,6 +36,7 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", userSchema);
+const Review = mongoose.model("Review", reviewSchema);
 
 app.post("/api/register", async (req, res) => {
   const { name, email, password } = req.body;
@@ -71,18 +87,73 @@ app.post("/api/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    jwt.sign(
+    const token = jwt.sign(
       { userId: user._id, name: user.name },
       process.env.VITE_SECRET_KEY,
       {},
-      (err, token) => {
-        if (err) throw err;
-        res.cookie("token", token).json({
-          name: user.name,
-          userId: user._id,
-        });
-      },
     );
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 3600000,
+    });
+
+    res.json({
+      name: user.name,
+      userId: user._id,
+      token,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+const authenticateToken = (req, res, next) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  jwt.verify(token, process.env.VITE_SECRET_KEY, {}, (err, user) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(403).json({ message: "Forbidden" });
+    }
+    req.user = user;
+    next();
+  });
+};
+
+app.post("/api/reviews", authenticateToken, async (req, res) => {
+  const { hallName, rating, text, imageUrl } = req.body;
+
+  try {
+    const newReview = new Review({
+      hallName,
+      rating,
+      text,
+      imageUrl,
+      date: new Date(),
+      userId: req.user.userId,
+    });
+
+    await newReview.save();
+    res.status(201).json({ message: "Review submitted sucessfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.get("/api/reviews/:hallName", async (req, res) => {
+  const { hallName } = req.params;
+
+  try {
+    const reviews = await Review.find({ hallName }).populate("userId", "name");
+    res.json(reviews);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -91,5 +162,4 @@ app.post("/api/login", async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(dotenv);
 });

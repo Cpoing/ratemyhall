@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../components/UserContext/UserContext";
+import { Link } from "react-router-dom";
 import "./LoginPage.css";
 
 const LoginPage: React.FC = () => {
@@ -22,6 +23,7 @@ const LoginPage: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userData),
+        credentials: "include",
       });
 
       if (response.ok) {
@@ -69,6 +71,10 @@ const LoginPage: React.FC = () => {
 
         <button type="submit">Login</button>
       </form>
+      <div className="register-link">
+        Don't have an account?&nbsp;{" "}
+        <Link to={"/register"}> register here</Link>
+      </div>
     </div>
   );
 };

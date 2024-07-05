@@ -1,39 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./LectureHallDetails.css";
 import ImageModal from "../../components/ImageModal/ImageModal";
-//dummy images below, remove later
-import reviewhall from "../../images/reviewhall.png";
-import deepPurple from "../../images/Deep Purple.jpg";
+import { useUser } from "../../components/UserContext/UserContext";
+import "./LectureHallDetails.css";
 
 const LectureHallDetails: React.FC = () => {
   const { name } = useParams<{ name: string }>();
+  const { user } = useUser();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [reviews, setReviews] = useState<any[]>([]);
   const navigate = useNavigate();
 
-  const reviews = [
-    {
-      rating: 4,
-      text: "Great hall, comfortable seats.",
-      imageUrl: reviewhall,
-      date: "2024-07-01",
-    },
-    {
-      rating: 3,
-      text: "Average, could be better.",
-      imageUrl: deepPurple,
-      date: "2024-07-02",
-    },
-    {
-      rating: 4,
-      text: "Meh",
-      imageUrl: "",
-      date: "2024-07-03",
-    },
-  ];
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/reviews/${name}`,
+        );
+        const data = await response.json();
+        setReviews(data);
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
+      }
+    };
 
+    fetchReviews();
+  }, [name]);
   const handleClick = () => {
-    navigate(`/add-review/${name}`);
+    if (user) {
+      navigate(`/add-review/${name}`);
+    } else {
+      navigate("/login");
+    }
   };
 
   const handleImageClick = (imageUrl: string) => {

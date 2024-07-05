@@ -1,13 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext/UserContext";
 import "./Header.css";
 
 const Header: React.FC = () => {
   const { user, setUser } = useUser();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     setUser(null);
+    navigate("/");
   };
 
   return (

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import "./addReview.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useUser } from "../../components/UserContext/UserContext";
 
 const AddReview: React.FC = () => {
+  const { name } = useParams<{ name: string }>();
+  const { user } = useUser();
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(0);
   const [image, setImage] = useState<File | null>(null);
@@ -19,19 +22,35 @@ const AddReview: React.FC = () => {
     setReview(event.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (review.trim() && rating > 0) {
       const newReview = {
+        hallName: name,
         rating,
-        review,
-        image,
-        user: "Current User", // Replace with actual user data later
+        text: review,
+        imageUrl: image ? URL.createObjectURL(image) : "",
       };
+      try {
+        const response = await fetch("http://localhost:3000/api/reviews", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newReview),
+          credentials: "include",
+        });
 
-      console.log("Review Submitted:", newReview);
-      // Implement API call to submit the review
-
-      navigate(-1);
+        if (response.ok) {
+          console.log("Review Submitted:", newReview);
+          navigate(-1);
+        } else {
+          const errorData = await response.json();
+          alert(`Error: ${errorData.message}`);
+        }
+      } catch (error) {
+        console.error("Error submitting review:", error);
+        alert("Error submitting review.");
+      }
     } else {
       alert("Please provide a rating and review text.");
     }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 import "./RegisterPage.css";
 
 const RegisterPage: React.FC = () => {
@@ -89,6 +89,9 @@ const RegisterPage: React.FC = () => {
         {success && <p className="success">{success}</p>}
         <button type="submit">Register</button>
       </form>
+      <div className="register-link">
+        Already have an account?&nbsp; <Link to={"/login"}> login here</Link>
+      </div>
     </div>
   );
 };
