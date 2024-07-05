@@ -7,12 +7,10 @@ const jwt = require("jsonwebtoken");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-require("dotenv").config();
+const dotenv = require("dotenv").config({ path: "../.env" });
 app.use(cors());
 
-mongoose.connect(
-  "mongodb+srv://tedlee000:Lgu2vtRn2nn08zNp@cluster0.59cqlq8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-);
+mongoose.connect(process.env.VITE_MONGOOSE_URI);
 
 app.use(bodyParser.json());
 
@@ -75,7 +73,7 @@ app.post("/api/login", async (req, res) => {
 
     jwt.sign(
       { userId: user._id, name: user.name },
-      "00Jwq9HjglwFLy5/5im4+2uy9s2WHqahtgkfTpEkPcI=",
+      process.env.VITE_SECRET_KEY,
       {},
       (err, token) => {
         if (err) throw err;
@@ -89,24 +87,9 @@ app.post("/api/login", async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
-
-  //try {
-  //  const user = await User.findOne({ email });
-  //  if (!user) {
-  //    return res.status(404).json({ message: "User not found" });
-  //  }
-
-  //  const isPasswordValid = await bcrypt.compare(password, user.password);
-  //  if (!isPasswordValid) {
-  //    return res.status(401).json({ message: "Invalid credentials" });
-  //  }
-
-  //  res.status(200).json({ message: "Login successful", user });
-  //} catch (err) {
-  //  res.status(500).json({ message: "Server error" });
-  //}
 });
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(dotenv);
 });
