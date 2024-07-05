@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../components/UserContext/UserContext";
 import "./LoginPage.css";
 
 const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const userData = { username, password };
+    const userData = { email, password };
 
     try {
       const response = await fetch("http://localhost:3000/api/login", {
@@ -22,14 +25,23 @@ const LoginPage: React.FC = () => {
       });
 
       if (response.ok) {
+        const data = await response.json();
         console.log("User logged in successfully");
+        setError("");
+
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.token);
+
+        setUser(data);
 
         navigate("/");
       } else {
         console.error("Login failed");
+        setError("Wrong Credentials");
       }
     } catch (error) {
       console.error("Error:", error);
+      setError("An error occured while logging in");
     }
   };
 
@@ -38,11 +50,11 @@ const LoginPage: React.FC = () => {
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
         <div>
-          <label>Username</label>
+          <label>Email</label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
@@ -53,6 +65,7 @@ const LoginPage: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        {error && <p className="error">{error}</p>}
 
         <button type="submit">Login</button>
       </form>

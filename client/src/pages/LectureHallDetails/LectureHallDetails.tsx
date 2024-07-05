@@ -13,21 +13,22 @@ const LectureHallDetails: React.FC = () => {
 
   const reviews = [
     {
-      user: "User 1",
       rating: 4,
       text: "Great hall, comfortable seats.",
       imageUrl: reviewhall,
+      date: "2024-07-01",
     },
     {
-      user: "User 2",
       rating: 3,
       text: "Average, could be better.",
       imageUrl: deepPurple,
+      date: "2024-07-02",
     },
     {
-      user: "User 3",
       rating: 4,
       text: "Meh",
+      imageUrl: "",
+      date: "2024-07-03",
     },
   ];
 
@@ -63,8 +64,10 @@ const LectureHallDetails: React.FC = () => {
               )}
               <div className="review-content">
                 <div className="review-header">
-                  <h3>{review.user}</h3>
                   <div className="review-rating">⭐ {review.rating}/5</div>
+                  <div className="review-date">
+                    {new Date(review.date).toLocaleDateString()}
+                  </div>
                 </div>
                 <p>{review.text}</p>
               </div>

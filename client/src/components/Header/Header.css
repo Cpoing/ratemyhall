@@ -35,3 +35,20 @@
 .nav a:hover {
   color: #f0db4f;
 }
+
+.nav .welcome {
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+.logout-button {
+  background: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.logout-button:hover {
+  text-decoration: underline;
+}

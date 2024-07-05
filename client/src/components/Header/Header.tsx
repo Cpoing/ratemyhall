@@ -1,17 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useUser } from "../UserContext/UserContext";
 import "./Header.css";
 
 const Header: React.FC = () => {
+  const { user, setUser } = useUser();
+
+  const handleLogout = () => {
+    setUser(null);
+  };
+
   return (
     <header className="header">
       <div className="logo">
         <Link to="/">Rate My Hall</Link>
       </div>
       <nav className="nav">
-        <Link to="/about">About</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/register">Register</Link>
+        {user ? (
+          <>
+            <span className="welcome">Welcome, {user.name}</span>
+            <button onClick={handleLogout} className="logout-button">
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
+        )}
       </nav>
     </header>
   );

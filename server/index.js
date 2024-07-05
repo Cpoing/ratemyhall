@@ -7,8 +7,7 @@ const jwt = require("jsonwebtoken");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const secret = "n1iu2rfj891n931309fjesdf3903912ujf";
-
+require("dotenv").config();
 app.use(cors());
 
 mongoose.connect(
@@ -18,7 +17,7 @@ mongoose.connect(
 app.use(bodyParser.json());
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true },
+  name: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
 });
@@ -26,21 +25,23 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 
 app.post("/api/register", async (req, res) => {
-  const { username, email, password } = req.body;
+  const { name, email, password } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
-    if (!username || !email || !password) {
-      return res.status(400).json({ message: "Username, email," });
+    if (!name || !email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Name, email, and password are required" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
-      username,
+      name,
       email,
       password: hashedPassword,
     });
@@ -53,10 +54,16 @@ app.post("/api/register", async (req, res) => {
 });
 
 app.post("/api/login", async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ username });
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
+    }
+
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -66,10 +73,38 @@ app.post("/api/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    res.status(200).json({ message: "Login successful" });
+    jwt.sign(
+      { userId: user._id, name: user.name },
+      "00Jwq9HjglwFLy5/5im4+2uy9s2WHqahtgkfTpEkPcI=",
+      {},
+      (err, token) => {
+        if (err) throw err;
+        res.cookie("token", token).json({
+          name: user.name,
+          userId: user._id,
+        });
+      },
+    );
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
+
+  //try {
+  //  const user = await User.findOne({ email });
+  //  if (!user) {
+  //    return res.status(404).json({ message: "User not found" });
+  //  }
+
+  //  const isPasswordValid = await bcrypt.compare(password, user.password);
+  //  if (!isPasswordValid) {
+  //    return res.status(401).json({ message: "Invalid credentials" });
+  //  }
+
+  //  res.status(200).json({ message: "Login successful", user });
+  //} catch (err) {
+  //  res.status(500).json({ message: "Server error" });
+  //}
 });
 
 app.listen(PORT, () => {

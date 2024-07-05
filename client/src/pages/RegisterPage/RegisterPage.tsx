@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import "./RegisterPage.css";
 
 const RegisterPage: React.FC = () => {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -14,7 +14,7 @@ const RegisterPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const userData = { username, email, password };
+    const userData = { name, email, password };
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -50,11 +50,11 @@ const RegisterPage: React.FC = () => {
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Username</label>
+          <label>First Name</label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
         </div>

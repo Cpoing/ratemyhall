@@ -53,3 +53,7 @@
 .login-container button:hover {
   background-color: #0056b3;
 }
+
+.login-container .error {
+  color: red;
+}

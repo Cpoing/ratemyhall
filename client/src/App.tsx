@@ -8,28 +8,31 @@ import LectureHallDetails from "./pages/LectureHallDetails/LectureHallDetails";
 import AddReview from "./pages/addReview/addReview";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import { UserProvider } from "./components/UserContext/UserContext";
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <div className="app-wrapper">
-        <Header />
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/search" element={<SearchResults />} />
-            <Route
-              path="/building/:id/:name"
-              element={<LectureHallDetails />}
-            />
-            <Route path="/add-review/:name" element={<AddReview />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
-          </Routes>
+    <UserProvider>
+      <Router>
+        <div className="app-wrapper">
+          <Header />
+          <div className="content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/search" element={<SearchResults />} />
+              <Route
+                path="/building/:id/:name"
+                element={<LectureHallDetails />}
+              />
+              <Route path="/add-review/:name" element={<AddReview />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/login" element={<LoginPage />} />
+            </Routes>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </Router>
+      </Router>
+    </UserProvider>
   );
 };
 export default App;
