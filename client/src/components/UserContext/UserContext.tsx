@@ -1,14 +1,19 @@
 import { createContext, useState, useContext, ReactNode } from "react";
 
+interface User {
+  name: string;
+  userId: string;
+}
+
 interface UserContextType {
-  user: { name: string } | null;
-  setUser: (user: { name: string } | null) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<{ name: string } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

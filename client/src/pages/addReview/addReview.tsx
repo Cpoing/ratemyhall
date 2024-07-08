@@ -29,6 +29,7 @@ const AddReview: React.FC = () => {
         rating,
         text: review,
         imageUrl: image ? URL.createObjectURL(image) : "",
+        userId: user.userId,
       };
       try {
         const response = await fetch("http://localhost:3000/api/reviews", {

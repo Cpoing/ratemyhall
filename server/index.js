@@ -148,11 +148,35 @@ app.post("/api/reviews", authenticateToken, async (req, res) => {
   }
 });
 
+app.delete("/api/reviews/:id", authenticateToken, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const review = await Review.findById(id);
+    if (!review) {
+      return res.status(404).json({ message: "Review not found" });
+    }
+
+    if (review.userId.toString() !== req.user.userId) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to delete this review" });
+    }
+
+    await review.deleteOne();
+    res.status(200).json({ message: "Review deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 app.get("/api/reviews/:hallName", async (req, res) => {
   const { hallName } = req.params;
 
   try {
     const reviews = await Review.find({ hallName }).populate("userId", "name");
+    console.log(`Fetched reviews: ${JSON.stringify(reviews)}`);
     res.json(reviews);
   } catch (err) {
     console.error(err);
