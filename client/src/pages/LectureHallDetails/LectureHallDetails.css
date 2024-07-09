@@ -43,8 +43,6 @@ h1 {
 .review-card {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -60,7 +58,7 @@ h1 {
 
 .review-rating {
   font-size: 1.1rem;
-  color: gold;
+  color: #f5bd02;
 }
 
 .review-date-delete-container {

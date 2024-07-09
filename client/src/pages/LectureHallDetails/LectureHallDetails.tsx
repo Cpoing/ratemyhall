@@ -84,7 +84,7 @@ const LectureHallDetails: React.FC = () => {
             <div key={index} className="review-card">
               {review.imageUrl && (
                 <img
-                  src={review.imageUrl}
+                  src={`http://localhost:3000${review.imageUrl}`}
                   alt="Review"
                   className="review-image"
                   onClick={() => handleImageClick(review.imageUrl)}

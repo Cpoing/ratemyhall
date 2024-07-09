@@ -22,38 +22,34 @@ const AddReview: React.FC = () => {
     setReview(event.target.value);
   };
 
-  const handleSubmit = async () => {
-    if (review.trim() && rating > 0) {
-      const newReview = {
-        hallName: name,
-        rating,
-        text: review,
-        imageUrl: image ? URL.createObjectURL(image) : "",
-        userId: user.userId,
-      };
-      try {
-        const response = await fetch("http://localhost:3000/api/reviews", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newReview),
-          credentials: "include",
-        });
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("hallName", String(name));
+    formData.append("rating", rating.toString());
+    formData.append("text", review);
+    if (image) {
+      formData.append("image", image);
+    }
 
-        if (response.ok) {
-          console.log("Review Submitted:", newReview);
-          navigate(-1);
-        } else {
-          const errorData = await response.json();
-          alert(`Error: ${errorData.message}`);
-        }
-      } catch (error) {
-        console.error("Error submitting review:", error);
-        alert("Error submitting review.");
+    try {
+      const response = await fetch("http://localhost:3000/api/reviews", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        console.log("Review Submitted:", formData);
+        navigate(-1);
+      } else {
+        const errorData = await response.json();
+        console.log(`Error: ${errorData.message}`);
+        alert(`Error: ${errorData.message}`);
       }
-    } else {
-      alert("Please provide a rating and review text.");
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      alert("Error submitting review.");
     }
   };
 
@@ -115,6 +111,7 @@ const AddReview: React.FC = () => {
           accept="image/*"
           onChange={handleImageChange}
           style={{ display: "none" }}
+          name="image"
         />
         <div className="image-button-container">
           <button

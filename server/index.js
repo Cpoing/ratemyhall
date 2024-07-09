@@ -5,20 +5,24 @@ const bcrypt = require("bcryptjs");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const path = require("path");
 
 const app = express();
-app.use(cookieParser());
 const PORT = process.env.PORT || 3000;
 const dotenv = require("dotenv").config({ path: "../.env" });
 const corsOptions = {
   credentials: true,
   origin: "http://localhost:5173",
 };
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(cookieParser());
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
 
 mongoose.connect(process.env.VITE_MONGOOSE_URI);
-
-app.use(bodyParser.json());
 
 const reviewSchema = new mongoose.Schema({
   hallName: { type: String, required: true },
@@ -127,26 +131,32 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-app.post("/api/reviews", authenticateToken, async (req, res) => {
-  const { hallName, rating, text, imageUrl } = req.body;
+app.post(
+  "/api/reviews",
+  authenticateToken,
+  upload.single("image"),
+  async (req, res) => {
+    const { hallName, rating, text } = req.body;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
-  try {
-    const newReview = new Review({
-      hallName,
-      rating,
-      text,
-      imageUrl,
-      date: new Date(),
-      userId: req.user.userId,
-    });
+    try {
+      const newReview = new Review({
+        hallName,
+        rating,
+        text,
+        imageUrl,
+        date: new Date(),
+        userId: req.user.userId,
+      });
 
-    await newReview.save();
-    res.status(201).json({ message: "Review submitted sucessfully" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
-});
+      await newReview.save();
+      res.status(201).json({ message: "Review submitted sucessfully" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    }
+  },
+);
 
 app.delete("/api/reviews/:id", authenticateToken, async (req, res) => {
   const { id } = req.params;
