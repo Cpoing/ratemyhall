@@ -101,9 +101,9 @@ const AddReview: React.FC = () => {
           placeholder="What do you want others to know about this lecture hall?"
           value={review}
           onChange={handleReviewChange}
-          maxLength={200}
+          maxLength={1000}
         />
-        <div className="word-count">{review.split(" ").length}/200</div>
+        <div className="word-count">{review.length}/1000</div>
       </div>
       <div className="image-upload-container">
         {imagePreview && (

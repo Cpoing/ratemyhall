@@ -93,7 +93,11 @@ const LectureHallDetails: React.FC = () => {
               <div className="header-content">
                 {" "}
                 <div className="review-header">
-                  <div className="review-rating">⭐ {review.rating}/5</div>
+                  <div className="review-rating">
+                    {"★".repeat(Math.round(review.rating)) +
+                      "☆".repeat(5 - Math.round(review.rating))}{" "}
+                    {review.rating}/5
+                  </div>
                   <div className="review-buttons-date">
                     {" "}
                     {user && review.userId._id === user.userId && (

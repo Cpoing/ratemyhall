@@ -43,7 +43,8 @@ h1 {
 .review-card {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -55,11 +56,10 @@ h1 {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-bottom: 10px;
 }
 
 .review-rating {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: gold;
 }
 
@@ -74,8 +74,8 @@ h1 {
 }
 
 .review-image {
-  width: 130px;
-  height: 130px;
+  width: 160px;
+  height: 160px;
   object-fit: cover;
   border-radius: 5px;
   margin-right: 20px;
@@ -113,6 +113,6 @@ h1 {
   justify-content: center;
 }
 
-p {
+.review-text {
   margin-top: 0;
 }
