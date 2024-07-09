@@ -90,25 +90,28 @@ const LectureHallDetails: React.FC = () => {
                   onClick={() => handleImageClick(review.imageUrl)}
                 />
               )}
-              <div className="review-header">
-                <div className="review-rating">⭐ {review.rating}/5</div>
-                <div className="review-buttons-date">
-                  {" "}
-                  {user && review.userId._id === user.userId && (
-                    <MdDeleteOutline
-                      className="delete-review-button"
-                      onClick={() => handleDelete(review._id)}
-                    >
-                      Delete
-                    </MdDeleteOutline>
-                  )}
-                  <div className="review-date">
-                    {new Date(review.date).toLocaleDateString()}
+              <div className="header-content">
+                {" "}
+                <div className="review-header">
+                  <div className="review-rating">⭐ {review.rating}/5</div>
+                  <div className="review-buttons-date">
+                    {" "}
+                    {user && review.userId._id === user.userId && (
+                      <MdDeleteOutline
+                        className="delete-review-button"
+                        onClick={() => handleDelete(review._id)}
+                      >
+                        Delete
+                      </MdDeleteOutline>
+                    )}
+                    <div className="review-date">
+                      {new Date(review.date).toLocaleDateString()}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="review-content">
-                <p>{review.text}</p>
+                <div className="review-content">
+                  <p>{review.text}</p>
+                </div>
               </div>
             </div>
           ))}

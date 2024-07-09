@@ -24,7 +24,7 @@ const reviewSchema = new mongoose.Schema({
   hallName: { type: String, required: true },
   rating: { type: Number, required: true },
   text: { type: String, required: true },
-  image: { type: String },
+  imageUrl: { type: String },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   date: { type: Date, default: Date.now },
 });
@@ -176,7 +176,6 @@ app.get("/api/reviews/:hallName", async (req, res) => {
 
   try {
     const reviews = await Review.find({ hallName }).populate("userId", "name");
-    console.log(`Fetched reviews: ${JSON.stringify(reviews)}`);
     res.json(reviews);
   } catch (err) {
     console.error(err);

@@ -36,9 +36,13 @@ h1 {
   margin-top: 10px;
 }
 
+.header-content {
+  width: 100%;
+}
+
 .review-card {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
   padding: 15px;
   border: 1px solid #ddd;
