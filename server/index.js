@@ -94,7 +94,7 @@ app.post("/api/login", async (req, res) => {
     const token = jwt.sign(
       { userId: user._id, name: user.name },
       process.env.VITE_SECRET_KEY,
-      {},
+      { expiresIn: "1h" },
     );
 
     res.cookie("token", token, {
