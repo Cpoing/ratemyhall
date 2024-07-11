@@ -18,7 +18,7 @@ const Home: React.FC = () => {
     };
 
     fetchBuildings();
-  });
+  }, []);
 
   return (
     <div className="home-page">
@@ -32,8 +32,8 @@ const Home: React.FC = () => {
             key={building.id}
             id={building.id}
             name={building.name}
-            rating={building.rating}
-            reviews={building.reviews}
+            rating={building.averageRating}
+            reviews={building.reviewCount}
           />
         ))}
       </div>

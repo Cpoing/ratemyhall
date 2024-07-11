@@ -26,7 +26,7 @@ const BuildingCard: React.FC<BuildingCardProps> = ({
       <h2>{name}</h2>
       <div className="building-card-rating">
         {"★".repeat(Math.round(rating)) + "☆".repeat(5 - Math.round(rating))}
-        <span>{reviews} reviews</span>
+        <span>{reviews ? reviews : 0} reviews</span>
       </div>
     </div>
   );

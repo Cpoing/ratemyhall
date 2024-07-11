@@ -40,8 +40,8 @@ const SearchResults: React.FC = () => {
             key={building.id}
             id={building.id}
             name={building.name}
-            reviews={building.reviews}
-            rating={building.rating}
+            reviews={building.reviewCount}
+            rating={building.averageRating}
           />
         ))}
       </div>

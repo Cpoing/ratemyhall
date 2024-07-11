@@ -199,7 +199,28 @@ app.get("/api/lecture-halls", async (req, res) => {
     const filePath = path.join(__dirname, "lectureHalls.json");
     const data = fs.readFileSync(filePath, "utf8");
     let lectureHalls = JSON.parse(data);
-    res.json(lectureHalls);
+    const reviews = await Review.find().lean();
+
+    const hallsWithReviews = lectureHalls.map((hall) => {
+      const hallReviews = reviews.filter(
+        (review) => review.hallName === hall.name,
+      );
+      const ratingSum = hallReviews.reduce(
+        (sum, review) => sum + review.rating,
+        0,
+      );
+      const averageRating = hallReviews.length
+        ? ratingSum / hallReviews.length
+        : 0;
+
+      return {
+        ...hall,
+        averageRating: averageRating.toFixed(1),
+        reviewCount: hallReviews.length,
+      };
+    });
+
+    res.json(hallsWithReviews);
   } catch (err) {
     console.error("Error fetching lecture halls:", err);
     res.status(500).json({ message: "Server error" });
@@ -213,10 +234,29 @@ app.get("/api/search", async (req, res) => {
     const filePath = path.join(__dirname, "lectureHalls.json");
     const data = fs.readFileSync(filePath, "utf8");
     const lectureHalls = JSON.parse(data);
+    const reviews = await Review.find().lean();
 
     const searchResults = lectureHalls
       .filter((hall) => hall.name.toLowerCase().includes(query.toLowerCase()))
-      .slice(0, 9);
+      .slice(0, 9)
+      .map((hall) => {
+        const hallReviews = reviews.filter(
+          (review) => review.hallName === hall.name,
+        );
+        const ratingSum = hallReviews.reduce(
+          (sum, review) => sum + review.rating,
+          0,
+        );
+        const averageRating = hallReviews.length
+          ? ratingSum / hallReviews.length
+          : 0;
+
+        return {
+          ...hall,
+          averageRating: averageRating.toFixed(1),
+          reviewCount: hallReviews.length,
+        };
+      });
 
     res.json(searchResults);
   } catch (err) {
