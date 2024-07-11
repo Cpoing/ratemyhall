@@ -7,23 +7,6 @@ const SearchBar: React.FC = () => {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
 
-  // making fake api calls
-  const fetchData = (value: string) => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((json) => {
-        const results = json.filter((user: { name: string }) => {
-          return user && user.name && user.name.toLowerCase().includes(value);
-        });
-        console.log(results);
-      });
-  };
-
-  const handleChange = (value: string) => {
-    setInput(value);
-    fetchData(value);
-  };
-
   const handleSearch = () => {
     if (input.trim()) {
       navigate(`/search?q=${input}`);
@@ -36,7 +19,7 @@ const SearchBar: React.FC = () => {
       <input
         placeholder="Type to search..."
         value={input}
-        onChange={(e) => handleChange(e.target.value)}
+        onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       />
     </div>

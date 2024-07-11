@@ -1,25 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import BuildingCard from "../../components/BuildingCard/BuildingCard";
-import { Link } from "react-router-dom";
 import "./Home.css";
 
-const buildings = [
-  {
-    id: 1,
-    name: "PSE 210",
-    rating: 4,
-    reviews: 12,
-  },
-  {
-    id: 2,
-    name: "LAS B",
-    rating: 4,
-    reviews: 24,
-  },
-];
-
 const Home: React.FC = () => {
+  const [buildings, setBuildings] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchBuildings = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/lecture-halls");
+        const data = await response.json();
+        setBuildings(data.slice(0, 5));
+      } catch (error) {
+        console.error("Error fetching buildings:", error);
+      }
+    };
+
+    fetchBuildings();
+  });
+
   return (
     <div className="home-page">
       <div className="search-section">

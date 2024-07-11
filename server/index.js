@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const path = require("path");
+const fs = require("fs");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -189,6 +190,37 @@ app.get("/api/reviews/:hallName", async (req, res) => {
     res.json(reviews);
   } catch (err) {
     console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.get("/api/lecture-halls", async (req, res) => {
+  try {
+    const filePath = path.join(__dirname, "lectureHalls.json");
+    const data = fs.readFileSync(filePath, "utf8");
+    let lectureHalls = JSON.parse(data);
+    res.json(lectureHalls);
+  } catch (err) {
+    console.error("Error fetching lecture halls:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.get("/api/search", async (req, res) => {
+  const query = req.query.q;
+
+  try {
+    const filePath = path.join(__dirname, "lectureHalls.json");
+    const data = fs.readFileSync(filePath, "utf8");
+    const lectureHalls = JSON.parse(data);
+
+    const searchResults = lectureHalls
+      .filter((hall) => hall.name.toLowerCase().includes(query.toLowerCase()))
+      .slice(0, 9);
+
+    res.json(searchResults);
+  } catch (err) {
+    console.error("Error searching lecture halls:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
