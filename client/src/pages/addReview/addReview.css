@@ -5,6 +5,10 @@
   padding: 20px;
 }
 
+.add-review h1 {
+  color: #333;
+}
+
 .rating-container {
   margin-bottom: 20px;
   display: flex;

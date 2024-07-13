@@ -3,6 +3,10 @@
   padding: 20px;
 }
 
+h2 {
+  font-size: 2rem;
+}
+
 .search-header {
   font-size: 1.5rem;
   margin-bottom: 20px;

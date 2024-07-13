@@ -22,20 +22,23 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-page">
-      <div className="search-section">
-        <h1>Enter your building or Lecture Hall</h1>
-        <SearchBar />
-      </div>
-      <div className="building-list">
-        {buildings.map((building) => (
-          <BuildingCard
-            key={building.id}
-            id={building.id}
-            name={building.name}
-            rating={building.averageRating}
-            reviews={building.reviewCount}
-          />
-        ))}
+      <div className="home-divider">
+        {" "}
+        <div className="search-section">
+          <h1>Enter your Building or Lecture Hall</h1>
+          <SearchBar />
+        </div>
+        <div className="building-list">
+          {buildings.map((building) => (
+            <BuildingCard
+              key={building.id}
+              id={building.id}
+              name={building.name}
+              rating={building.averageRating}
+              reviews={building.reviewCount}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

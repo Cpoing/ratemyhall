@@ -11,6 +11,7 @@
   top: 0;
   box-sizing: border-box;
   height: 70px;
+  z-index: 3;
 }
 
 .logo a {

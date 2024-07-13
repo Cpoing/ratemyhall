@@ -75,10 +75,15 @@ const LectureHallDetails: React.FC = () => {
   return (
     <div className="Lecture-hall-details">
       <div className="lecture-wrapper">
-        <h1>{name}</h1>
-        <button className="add-review-button" onClick={handleClick}>
-          Add Review
-        </button>
+        {" "}
+        <div className="lecture-divider">
+          <div className="lecture-header">
+            <h1>{name}</h1>
+            <button className="add-review-button" onClick={handleClick}>
+              Add Review
+            </button>
+          </div>
+        </div>
         <div className="reviews">
           {reviews.map((review, index) => (
             <div key={index} className="review-card">

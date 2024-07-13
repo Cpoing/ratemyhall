@@ -29,7 +29,6 @@ const App: React.FC = () => {
               <Route path="/login" element={<LoginPage />} />
             </Routes>
           </div>
-          <Footer />
         </div>
       </Router>
     </UserProvider>
