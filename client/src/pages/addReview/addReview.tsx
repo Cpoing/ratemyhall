@@ -37,6 +37,9 @@ const AddReview: React.FC = () => {
           method: "POST",
           body: formData,
           credentials: "include",
+          headers: {
+            Authorization: `Bearer ${document.cookie.split("=")[1]}`,
+          },
         },
       );
 
