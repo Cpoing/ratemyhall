@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 const dotenv = require("dotenv").config({ path: "../.env" });
 const corsOptions = {
   credentials: true,
-  origin: "http://localhost:5173",
+  origin: "https://ratemyhall.onrender.com",
 };
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
