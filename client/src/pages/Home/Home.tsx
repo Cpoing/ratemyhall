@@ -9,7 +9,9 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchBuildings = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/lecture-halls");
+        const response = await fetch(
+          "https://ratemyhall-api.onrender.com/api/lecture-halls",
+        );
         const data = await response.json();
         setBuildings(data.slice(0, 5));
       } catch (error) {
