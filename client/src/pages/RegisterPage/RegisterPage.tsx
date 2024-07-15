@@ -22,13 +22,16 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://ratemyhall-api.onrender.com/api/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
         },
-        body: JSON.stringify(userData),
-      });
+      );
 
       if (response.ok) {
         setSuccess("Registration successful!");

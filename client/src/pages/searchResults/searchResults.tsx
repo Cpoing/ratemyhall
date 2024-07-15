@@ -18,7 +18,7 @@ const SearchResults: React.FC = () => {
   const fetchSearchResults = async (query: string) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/search?q=${query}`,
+        `https://ratemyhall-api.onrender.com/api/search?q=${query}`,
       );
       if (response.ok) {
         const data = await response.json();

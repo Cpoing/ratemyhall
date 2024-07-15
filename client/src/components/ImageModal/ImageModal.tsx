@@ -14,7 +14,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose }) => {
           &times;
         </span>
         <img
-          src={`http://localhost:3000${imageUrl}`}
+          src={`https://ratemyhall-api.onrender.com${imageUrl}`}
           alt="Expanded View"
           className="image-modal-image"
         />

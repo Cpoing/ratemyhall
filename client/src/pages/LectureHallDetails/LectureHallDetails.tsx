@@ -16,7 +16,7 @@ const LectureHallDetails: React.FC = () => {
     const fetchReviews = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/reviews/${name}`,
+          `https://ratemyhall-api.onrender.com/api/reviews/${name}`,
         );
         const data = await response.json();
         setReviews(data);
@@ -51,7 +51,7 @@ const LectureHallDetails: React.FC = () => {
     if (confirmDelete) {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/reviews/${reviewId}`,
+          `https://ratemyhall-api.onrender.com/api/reviews/${reviewId}`,
           {
             method: "DELETE",
             credentials: "include",
@@ -89,7 +89,7 @@ const LectureHallDetails: React.FC = () => {
             <div key={index} className="review-card">
               {review.imageUrl && (
                 <img
-                  src={`http://localhost:3000${review.imageUrl}`}
+                  src={`https://ratemyhall-api.onrender.com${review.imageUrl}`}
                   alt="Review"
                   className="review-image"
                   onClick={() => handleImageClick(review.imageUrl)}

@@ -31,11 +31,14 @@ const AddReview: React.FC = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/reviews", {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://ratemyhall-api.onrender.com/api/reviews",
+        {
+          method: "POST",
+          body: formData,
+          credentials: "include",
+        },
+      );
 
       if (response.ok) {
         console.log("Review Submitted:", formData);
