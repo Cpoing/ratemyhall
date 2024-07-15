@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import "./addReview.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { useUser } from "../../components/UserContext/UserContext";
 
 const AddReview: React.FC = () => {
   const { name } = useParams<{ name: string }>();
-  const { user } = useUser();
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(0);
   const [image, setImage] = useState<File | null>(null);
