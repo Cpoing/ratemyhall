@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../components/UserContext/UserContext";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 import "./LoginPage.css";
 
 const LoginPage: React.FC = () => {
@@ -33,7 +34,7 @@ const LoginPage: React.FC = () => {
         console.log("User logged in successfully");
         setError("");
 
-        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("user", JSON.stringify(data));
         localStorage.setItem("token", data.token);
 
         setUser(data);
