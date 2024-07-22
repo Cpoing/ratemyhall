@@ -12,22 +12,21 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { setUser } = useUser();
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const userData = { email, password };
 
     try {
-      const response = await fetch(
-        "https://ratemyhall-api.onrender.com/api/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
-          credentials: "include",
+      const response = await fetch(`${backendUrl}/api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify(userData),
+        credentials: "include",
+      });
 
       if (response.ok) {
         const data = await response.json();

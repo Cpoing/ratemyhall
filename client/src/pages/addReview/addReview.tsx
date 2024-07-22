@@ -10,6 +10,8 @@ const AddReview: React.FC = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const handleRatingChange = (value: number) => {
     setRating(value);
   };
@@ -31,14 +33,11 @@ const AddReview: React.FC = () => {
     }
 
     try {
-      const response = await fetch(
-        "https://ratemyhall-api.onrender.com/api/reviews",
-        {
-          method: "POST",
-          body: formData,
-          credentials: "include",
-        },
-      );
+      const response = await fetch(`${backendUrl}/api/reviews`, {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
 
       if (response.ok) {
         console.log("Review Submitted:", formData);

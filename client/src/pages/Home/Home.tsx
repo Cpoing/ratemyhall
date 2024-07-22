@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import SearchBar from "../../components/SearchBar/SearchBar";
 import BuildingCard from "../../components/BuildingCard/BuildingCard";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import "./Home.css";
 
 const Home: React.FC = () => {
   const [buildings, setBuildings] = useState<any[]>([]);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchBuildings = async () => {
       try {
-        const response = await fetch(
-          "https://ratemyhall-api.onrender.com/api/lecture-halls",
-        );
+        const response = await fetch(`${backendUrl}/api/lecture-halls`);
         const data = await response.json();
         setBuildings(data.slice(0, 5));
       } catch (error) {

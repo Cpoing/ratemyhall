@@ -15,6 +15,7 @@ const RegisterPage: React.FC = () => {
     e.preventDefault();
 
     const userData = { name, email, password };
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -22,16 +23,13 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      const response = await fetch(
-        "https://ratemyhall-api.onrender.com/api/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
+      const response = await fetch(`${backendUrl}/api/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify(userData),
+      });
 
       if (response.ok) {
         setSuccess("Registration successful!");

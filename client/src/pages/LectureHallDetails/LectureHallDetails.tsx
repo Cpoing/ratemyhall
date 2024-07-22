@@ -11,13 +11,12 @@ const LectureHallDetails: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [reviews, setReviews] = useState<any[]>([]);
   const navigate = useNavigate();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch(
-          `https://ratemyhall-api.onrender.com/api/reviews/${name}`,
-        );
+        const response = await fetch(`${backendUrl}/api/reviews/${name}`);
         const data = await response.json();
         setReviews(data);
       } catch (err) {
@@ -50,13 +49,10 @@ const LectureHallDetails: React.FC = () => {
     );
     if (confirmDelete) {
       try {
-        const response = await fetch(
-          `https://ratemyhall-api.onrender.com/api/reviews/${reviewId}`,
-          {
-            method: "DELETE",
-            credentials: "include",
-          },
-        );
+        const response = await fetch(`${backendUrl}/api/reviews/${reviewId}`, {
+          method: "DELETE",
+          credentials: "include",
+        });
 
         if (response.ok) {
           setReviews(reviews.filter((review) => review._id !== reviewId));
@@ -89,7 +85,7 @@ const LectureHallDetails: React.FC = () => {
             <div key={index} className="review-card">
               {review.imageUrl && (
                 <img
-                  src={`https://ratemyhall-api.onrender.com${review.imageUrl}`}
+                  src={`${backendUrl}${review.imageUrl}`}
                   alt="Review"
                   className="review-image"
                   onClick={() => handleImageClick(review.imageUrl)}

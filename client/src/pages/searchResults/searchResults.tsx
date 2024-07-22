@@ -9,17 +9,18 @@ const SearchResults: React.FC = () => {
 
   const [searchResults, setSearchResults] = useState<any[]>([]);
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   useEffect(() => {
     if (query.trim()) {
       fetchSearchResults(query);
+      fetch;
     }
   }, [query]);
 
   const fetchSearchResults = async (query: string) => {
     try {
-      const response = await fetch(
-        `https://ratemyhall-api.onrender.com/api/search?q=${query}`,
-      );
+      const response = await fetch(`${backendUrl}/api/search?q=${query}`);
       if (response.ok) {
         const data = await response.json();
         setSearchResults(data);
