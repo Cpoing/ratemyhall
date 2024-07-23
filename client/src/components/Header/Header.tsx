@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext/UserContext";
+import Cookies from "js-cookie";
 import "./Header.css";
 
 const Header: React.FC = () => {
@@ -10,8 +11,10 @@ const Header: React.FC = () => {
   const handleLogout = () => {
     setUser(null);
     navigate("/");
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    //localStorage.removeItem("token");
+    //localStorage.removeItem("user");
+    Cookies.remove("token");
+    Cookies.remove("user");
   };
 
   return (

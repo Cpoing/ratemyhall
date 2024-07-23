@@ -23,14 +23,18 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token");
     if (token) {
-      const savedUser = localStorage.getItem("user");
+      const savedUser = Cookies.get("user");
+      console.log("Token");
       if (savedUser) {
         setUser(JSON.parse(savedUser));
+        console.log("savedUser");
       } else {
         setUser(null);
       }
+    } else {
+      console.log("No token found in cookies");
     }
   }, []);
 

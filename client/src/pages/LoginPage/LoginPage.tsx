@@ -34,8 +34,8 @@ const LoginPage: React.FC = () => {
         console.log("User logged in successfully");
         setError("");
 
-        localStorage.setItem("user", JSON.stringify(data));
-        localStorage.setItem("token", data.token);
+        Cookies.set("user", JSON.stringify(data));
+        Cookies.set("token", JSON.stringify(data.token));
 
         setUser(data);
 
