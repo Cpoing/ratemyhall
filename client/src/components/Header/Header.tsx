@@ -11,10 +11,7 @@ const Header: React.FC = () => {
   const handleLogout = () => {
     setUser(null);
     navigate("/");
-    //localStorage.removeItem("token");
-    localStorage.removeItem("user");
     Cookies.remove("token");
-    Cookies.remove("user");
   };
 
   return (

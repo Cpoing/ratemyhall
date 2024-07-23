@@ -12,7 +12,7 @@ const fs = require("fs");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const dotenv = require("dotenv").config({ path: "../.env" });
+require("dotenv").config({ path: "../.env" });
 const corsOptions = {
   credentials: true,
   origin: process.env.VITE_FRONTEND_URL,
