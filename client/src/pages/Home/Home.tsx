@@ -5,7 +5,6 @@ import "./Home.css";
 
 const Home: React.FC = () => {
   const [buildings, setBuildings] = useState<any[]>([]);
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchBuildings = async () => {
