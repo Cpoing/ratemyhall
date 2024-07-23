@@ -12,7 +12,7 @@ const Header: React.FC = () => {
     setUser(null);
     navigate("/");
     //localStorage.removeItem("token");
-    //localStorage.removeItem("user");
+    localStorage.removeItem("user");
     Cookies.remove("token");
     Cookies.remove("user");
   };

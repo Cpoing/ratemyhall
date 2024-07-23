@@ -5,7 +5,6 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import Cookies from "js-cookie";
 
 interface User {
   name: string;
@@ -23,18 +22,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) {
-      const savedUser = Cookies.get("user");
-      console.log("Token");
-      if (savedUser) {
-        setUser(JSON.parse(savedUser));
-        console.log("savedUser");
-      } else {
-        setUser(null);
-      }
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     } else {
-      console.log("No token found in cookies");
+      setUser(null);
     }
   }, []);
 
