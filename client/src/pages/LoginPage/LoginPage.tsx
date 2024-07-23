@@ -34,9 +34,7 @@ const LoginPage: React.FC = () => {
         console.log("User logged in successfully");
         setError("");
 
-        localStorage.setItem("user", JSON.stringify(data));
-
-        setUser(data);
+        setUser({ name: data.name, userId: data.userId });
 
         navigate("/");
       } else {
@@ -45,7 +43,7 @@ const LoginPage: React.FC = () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      setError("An error occured while logging in");
+      setError("An error occurred while logging in");
     }
   };
 

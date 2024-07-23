@@ -5,6 +5,8 @@ import {
   ReactNode,
   useEffect,
 } from "react";
+import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
 
 interface User {
   name: string;
@@ -22,9 +24,16 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    const token = Cookies.get("token");
+
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        setUser({ name: decodedToken.name, userId: decodedToken.userId });
+      } catch (err) {
+        console.error("Failed to decode token", err);
+        setUser(null);
+      }
     } else {
       setUser(null);
     }
