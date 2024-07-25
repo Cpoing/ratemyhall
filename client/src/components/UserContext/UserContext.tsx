@@ -25,6 +25,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const token = Cookies.get("token");
+    console.log("Token from cookies:", token);
 
     if (token) {
       try {
