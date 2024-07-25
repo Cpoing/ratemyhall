@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BuildingCard from "../../components/BuildingCard/BuildingCard";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import Cookies from "js-cookie";
 import "./Home.css";
 
 const Home: React.FC = () => {
@@ -14,7 +13,6 @@ const Home: React.FC = () => {
         const response = await fetch(`${backendUrl}/api/lecture-halls`);
         const data = await response.json();
         setBuildings(data.slice(0, 5));
-        console.log(Cookies.get("token"));
       } catch (error) {
         console.error("Error fetching buildings:", error);
       }
