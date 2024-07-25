@@ -23,21 +23,44 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  useEffect(() => {
-    const token = Cookies.get("token");
-    console.log("Token from cookies:", token);
+  // useEffect(() => {
+  //   const token = Cookies.get("token");
+  //   console.log("Token from cookies:", token);
 
-    if (token) {
-      try {
-        const decodedToken: any = jwtDecode(token);
-        setUser({ name: decodedToken.name, userId: decodedToken.userId });
-      } catch (err) {
-        console.error("Failed to decode token", err);
+  //   if (token) {
+  //     try {
+  //       const decodedToken: any = jwtDecode(token);
+  //       setUser({ name: decodedToken.name, userId: decodedToken.userId });
+  //     } catch (err) {
+  //       console.error("Failed to decode token", err);
+  //       setUser(null);
+  //     }
+  //   } else {
+  //     setUser(null);
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    const delay = 1000; // Delay in milliseconds (1 second in this case)
+    const timeoutId = setTimeout(() => {
+      const token = Cookies.get("token");
+      console.log("Token from cookies:", token);
+
+      if (token) {
+        try {
+          const decodedToken: any = jwtDecode(token);
+          setUser({ name: decodedToken.name, userId: decodedToken.userId });
+        } catch (err) {
+          console.error("Failed to decode token", err);
+          setUser(null);
+        }
+      } else {
         setUser(null);
       }
-    } else {
-      setUser(null);
-    }
+    }, delay);
+
+    // Cleanup the timeout if the component unmounts or the effect is re-run
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
