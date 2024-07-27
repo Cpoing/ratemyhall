@@ -99,9 +99,7 @@ app.post("/api/login", async (req, res) => {
     );
 
     res.cookie("token", token, {
-      sameSite: "strict",
-
-      domain: ".onrender.com",
+      sameSite: "none",
     });
 
     res.json({
