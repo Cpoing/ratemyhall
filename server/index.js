@@ -12,6 +12,7 @@ const fs = require("fs");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+require("dotenv").config({ path: "../.env" });
 
 const corsOptions = {
   credentials: true,
@@ -23,7 +24,7 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb://db:27017/ratemyhall");
+mongoose.connect(process.env.VITE_MONGOOSE_URI);
 
 const reviewSchema = new mongoose.Schema({
   hallName: { type: String, required: true },
