@@ -12,10 +12,10 @@ const fs = require("fs");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-require("dotenv").config({ path: "../.env" });
+
 const corsOptions = {
   credentials: true,
-  origin: process.env.VITE_FRONTEND_URL,
+  origin: "*",
 };
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-mongoose.connect(process.env.VITE_MONGOOSE_URI);
+mongoose.connect("mongodb://db:27017/ratemyhall");
 
 const reviewSchema = new mongoose.Schema({
   hallName: { type: String, required: true },
