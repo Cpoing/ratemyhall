@@ -12,11 +12,10 @@ const fs = require("fs");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-require("dotenv").config({ path: "../.env" }); //--
 
 const corsOptions = {
   credentials: true,
-  origin: process.env.VITE_FRONTEND_URL, // "*"
+  origin: "*",
 };
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -196,7 +195,6 @@ app.get("/api/reviews/:hallName", async (req, res) => {
 });
 
 app.get("/api/lecture-halls", async (req, res) => {
-  console.log(process.env.VITE_FRONTEND_URL);
   try {
     const filePath = path.join(__dirname, "lectureHalls.json");
     const data = fs.readFileSync(filePath, "utf8");
