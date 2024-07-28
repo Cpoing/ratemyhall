@@ -1,3 +1,12 @@
+# Installation
+
+Rename the .env_default in client and root directory to .env. Then change the values to your domain name. Make sure to create an A record and point the domain to your machine IP address
+
+Run the following in order:
+- ```docker compose build --no-cache```
+- ```docker compose up -d```
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
