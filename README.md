@@ -1,6 +1,9 @@
 # Installation
 
-Rename the .env_default in client and root directory to .env. Then change the values to your domain name. Make sure to create an A record and point the domain to your machine IP address
+Rename the .env_default in client and root directory to .env. Then change example.com to your domain name.
+Make the following A records in your DNS records:
+- api.example.com -> IP Address
+- example.com -> IP Address
 
 Run the following in order:
 - ```docker compose build --no-cache```
