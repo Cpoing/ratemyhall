@@ -12,10 +12,11 @@ const fs = require("fs");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+require("dotenv").config({ path: "../.env" });
 
 const corsOptions = {
   credentials: true,
-  origin: "*",
+  origin: process.env.VITE_MONGOOSE_URI,
 };
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
