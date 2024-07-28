@@ -11,7 +11,7 @@ const Home: React.FC = () => {
     const fetchBuildings = async () => {
       try {
         const response = await fetch(`${backendUrl}/api/lecture-halls`);
-        console.log(backendUrl);
+        console.log(response);
         const data = await response.json();
         setBuildings(data.slice(0, 5));
       } catch (error) {
