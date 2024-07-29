@@ -16,7 +16,7 @@ require("dotenv").config({ path: "../.env" });
 
 const corsOptions = {
   credentials: true,
-  origin: "*",
+  origin: process.env.VITE_FRONTEND_URL,
 };
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
