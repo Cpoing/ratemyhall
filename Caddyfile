@@ -1,7 +1,0 @@
-{$DOMAIN} {
-	reverse_proxy client:80
-}
-
-api.{$DOMAIN} {
-	reverse_proxy server:3000
-}
