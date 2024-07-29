@@ -1,9 +1,18 @@
-FROM node:22-alpine AS build
+FROM node:22
+
 WORKDIR /app
-COPY . .
+
+COPY package*.json ./
+
 RUN npm install
+
+COPY . .
+
 RUN npm run build
 
-FROM caddy
-COPY Caddyfile /etc/caddy/Caddyfile
-COPY --from=build /app/dist /srv
+RUN npm install -g serve
+
+EXPOSE 5173
+
+CMD ["serve", "-s", "build"]
+
