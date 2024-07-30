@@ -24,6 +24,11 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
+app.use(express.static(path.join(__dirname, "../client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
+
 mongoose.connect(process.env.VITE_MONGOOSE_URI);
 
 const reviewSchema = new mongoose.Schema({
