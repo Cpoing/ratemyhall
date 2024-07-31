@@ -5,16 +5,28 @@ const bcrypt = require("bcryptjs");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-
 const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
-//const upload = multer({ dest: "uploads/" });
 const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
 require("dotenv").config({ path: "../.env" });
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+const corsOptions = {
+  credentials: true,
+  origin: process.env.VITE_FRONTEND_URL,
+};
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(cookieParser());
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+
+mongoose.connect(process.env.VITE_MONGOOSE_URI);
 
 const {
   S3Client,
@@ -34,21 +46,6 @@ const s3 = new S3Client({
   },
   region: process.env.VITE_BUCKET_REGION,
 });
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-const corsOptions = {
-  credentials: true,
-  origin: process.env.VITE_FRONTEND_URL,
-};
-
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use(cookieParser());
-app.use(cors(corsOptions));
-app.use(bodyParser.json());
-
-mongoose.connect(process.env.VITE_MONGOOSE_URI);
 
 const reviewSchema = new mongoose.Schema({
   hallName: { type: String, required: true },
