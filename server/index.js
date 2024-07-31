@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
   credentials: true,
-  origin: "https://www.ratemyhall.com",
+  origin: process.env.VITE_FRONTEND_URL,
 };
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -30,11 +30,11 @@ mongoose.connect(process.env.VITE_MONGOOSE_URI);
 
 const {
   S3Client,
-  PutObjectCommand,
   GetObjectCommand,
   DeleteObjectCommand,
 } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const { Upload } = require("@aws-sdk/lib-storage");
 
 const randomImageName = (bytes = 32) =>
   crypto.randomBytes(bytes).toString("hex");
@@ -161,16 +161,30 @@ app.post(
   async (req, res) => {
     const { hallName, rating, text } = req.body;
     const imageName = randomImageName();
+    const image = req.file;
 
-    const params = {
-      Bucket: process.env.VITE_BUCKET_NAME,
-      Key: imageName,
-      Body: req.file.buffer,
-      ContentType: req.file.mimetype,
-    };
+    if (!text) {
+      return res.status(400).json({ message: "Text field is required" });
+    }
 
-    const command = new PutObjectCommand(params);
-    await s3.send(command);
+    if (image) {
+      try {
+        const upload = new Upload({
+          client: s3,
+          params: {
+            Bucket: process.env.VITE_BUCKET_NAME,
+            Key: imageName,
+            Body: image.buffer,
+            ContentType: image.mimetype,
+          },
+        });
+
+        await upload.done();
+      } catch (err) {
+        console.error("Error uploading to S3:", err);
+        return res.status(500).json({ message: "Error uploading image" });
+      }
+    }
 
     try {
       const newReview = new Review({
