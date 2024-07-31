@@ -18,7 +18,8 @@ const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
   credentials: true,
-  origin: process.env.VITE_FRONTEND_URL,
+  //origin: process.env.VITE_FRONTEND_URL,
+  origin: "*",
 };
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
