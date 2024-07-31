@@ -44,7 +44,7 @@ const s3 = new S3Client({
     accessKeyId: process.env.VITE_ACCESS_KEY,
     secretAccessKey: process.env.VITE_SECRET_ACCESS_KEY,
   },
-  region: "us-east-2",
+  region: process.env.VITE_BUCKET_REGION,
 });
 
 const reviewSchema = new mongoose.Schema({
@@ -123,7 +123,7 @@ app.post("/api/login", async (req, res) => {
     res.cookie("token", token, {
       sameSite: "None",
       secure: true,
-      //domain: "ratemyhall.com",
+      domain: "ratemyhall.com",
     });
 
     res.json({
