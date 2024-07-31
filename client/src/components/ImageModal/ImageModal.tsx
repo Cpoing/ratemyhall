@@ -6,8 +6,6 @@ interface ImageModalProps {
   onClose: () => void;
 }
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
 const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose }) => {
   return (
     <div className="image-modal">
