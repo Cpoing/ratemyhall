@@ -15,11 +15,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose }) => {
         <span className="image-modal-close" onClick={onClose}>
           &times;
         </span>
-        <img
-          src={`${backendUrl}${imageUrl}`}
-          alt="Expanded View"
-          className="image-modal-image"
-        />
+        <img src={imageUrl} alt="Expanded View" className="image-modal-image" />
       </div>
     </div>
   );

@@ -5,14 +5,38 @@ const bcrypt = require("bcryptjs");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+//const upload = multer({ dest: "uploads/" });
 const path = require("path");
 const fs = require("fs");
+const crypto = require("crypto");
+require("dotenv").config({ path: "../.env" });
+
+const {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+  DeleteObjectCommand,
+} = require("@aws-sdk/client-s3");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+
+const randomImageName = (bytes = 32) =>
+  crypto.randomBytes(bytes).toString("hex");
+
+const s3 = new S3Client({
+  credentials: {
+    accessKeyId: process.env.VITE_ACCESS_KEY,
+    secretAccessKey: process.env.VITE_SECRET_ACCESS_KEY,
+  },
+  region: process.env.VITE_BUCKET_REGION,
+});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-require("dotenv").config({ path: "../.env" });
 
 const corsOptions = {
   credentials: true,
@@ -24,18 +48,13 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, "../client/dist")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-});
-
 mongoose.connect(process.env.VITE_MONGOOSE_URI);
 
 const reviewSchema = new mongoose.Schema({
   hallName: { type: String, required: true },
   rating: { type: Number, required: true },
   text: { type: String, required: true },
-  imageUrl: { type: String },
+  imageName: { type: String },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   date: { type: Date, default: Date.now },
 });
@@ -107,7 +126,7 @@ app.post("/api/login", async (req, res) => {
     res.cookie("token", token, {
       sameSite: "None",
       secure: true,
-      domain: "ratemyhall.com",
+      //domain: "ratemyhall.com",
     });
 
     res.json({
@@ -144,14 +163,24 @@ app.post(
   upload.single("image"),
   async (req, res) => {
     const { hallName, rating, text } = req.body;
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+    const imageName = randomImageName();
+
+    const params = {
+      Bucket: process.env.VITE_BUCKET_NAME,
+      Key: imageName,
+      Body: req.file.buffer,
+      ContentType: req.file.mimetype,
+    };
+
+    const command = new PutObjectCommand(params);
+    await s3.send(command);
 
     try {
       const newReview = new Review({
         hallName,
         rating,
         text,
-        imageUrl,
+        imageName,
         date: new Date(),
         userId: req.user.userId,
       });
@@ -174,6 +203,13 @@ app.delete("/api/reviews/:id", authenticateToken, async (req, res) => {
       return res.status(404).json({ message: "Review not found" });
     }
 
+    const params = {
+      Bucket: process.env.VITE_BUCKET_NAME,
+      Key: review.imageName,
+    };
+    const command = new DeleteObjectCommand(params);
+    await s3.send(command);
+
     if (review.userId.toString() !== req.user.userId) {
       return res
         .status(403)
@@ -193,7 +229,23 @@ app.get("/api/reviews/:hallName", async (req, res) => {
 
   try {
     const reviews = await Review.find({ hallName }).populate("userId", "name");
-    res.json(reviews);
+
+    const reviewsWithUrls = await Promise.all(
+      reviews.map(async (review) => {
+        const getObjectParams = {
+          Bucket: process.env.VITE_BUCKET_NAME,
+          Key: review.imageName,
+        };
+        const command = new GetObjectCommand(getObjectParams);
+        const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+        return {
+          ...review.toObject(),
+          imageUrl: url,
+        };
+      }),
+    );
+
+    res.json(reviewsWithUrls);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });

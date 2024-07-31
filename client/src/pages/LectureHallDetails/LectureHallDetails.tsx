@@ -85,7 +85,7 @@ const LectureHallDetails: React.FC = () => {
             <div key={index} className="review-card">
               {review.imageUrl && (
                 <img
-                  src={`${backendUrl}${review.imageUrl}`}
+                  src={review.imageUrl}
                   alt="Review"
                   className="review-image"
                   onClick={() => handleImageClick(review.imageUrl)}
