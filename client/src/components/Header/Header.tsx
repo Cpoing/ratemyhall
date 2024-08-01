@@ -17,7 +17,7 @@ const Header: React.FC = () => {
   return (
     <header className="header">
       <div className="logo">
-        <Link to="/">Rate My Hall</Link>
+        <Link to="/">RateMyHall</Link>
       </div>
       <nav className="nav">
         {user ? (
