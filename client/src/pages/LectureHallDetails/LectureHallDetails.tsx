@@ -72,7 +72,6 @@ const LectureHallDetails: React.FC = () => {
   return (
     <div className="Lecture-hall-details">
       <div className="lecture-wrapper">
-        {" "}
         <div className="lecture-divider">
           <div className="lecture-header">
             <h1>{name}</h1>
@@ -93,7 +92,6 @@ const LectureHallDetails: React.FC = () => {
                 />
               )}
               <div className="header-content">
-                {" "}
                 <div className="review-header">
                   <div className="review-rating">
                     {"★".repeat(Math.round(review.rating)) +
@@ -101,7 +99,6 @@ const LectureHallDetails: React.FC = () => {
                     {review.rating}/5
                   </div>
                   <div className="review-buttons-date">
-                    {" "}
                     {user && review.userId._id === user.userId && (
                       <MdDeleteOutline
                         className="delete-review-button"
