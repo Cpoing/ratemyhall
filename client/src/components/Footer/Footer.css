@@ -8,16 +8,17 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: auto;
-  position: fixed;
-  bottom: 0;
   box-sizing: border-box;
   height: 70px;
+  position: absolute;
+  bottom: 0;
 }
 
 .footer-links {
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
   margin-bottom: 8px;
 }
 
@@ -31,4 +32,8 @@
 
 .footer-links a:hover {
   color: #f0db4f;
+}
+
+.footer-links .rights:hover {
+  color: white;
 }

@@ -72,7 +72,7 @@ const LoginPage: React.FC = () => {
       </form>
       <div className="register-link">
         Don't have an account?&nbsp;{" "}
-        <Link to={"/register"}> register here</Link>
+        <Link to={"/register"}> Register here</Link>
       </div>
     </div>
   );

@@ -91,7 +91,7 @@ const RegisterPage: React.FC = () => {
         <button type="submit">Register</button>
       </form>
       <div className="register-link">
-        Already have an account?&nbsp; <Link to={"/login"}> login here</Link>
+        Already have an account?&nbsp; <Link to={"/login"}> Login here</Link>
       </div>
     </div>
   );

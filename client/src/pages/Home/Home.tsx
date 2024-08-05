@@ -26,7 +26,7 @@ const Home: React.FC = () => {
       <div className="home-divider">
         {" "}
         <div className="search-section">
-          <h1>Enter your Building or Lecture Hall</h1>
+          <h1>Enter your Lecture Hall</h1>
           <SearchBar />
         </div>
         <div className="building-list">
