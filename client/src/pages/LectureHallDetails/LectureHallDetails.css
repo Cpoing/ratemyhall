@@ -15,7 +15,6 @@
 
 .lecture-header {
   margin-left: 65px;
-  margin-bottom: 15px;
 }
 
 button {
@@ -26,6 +25,7 @@ button {
   border-radius: 5px;
   cursor: pointer;
   margin-bottom: 20px;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -125,4 +125,15 @@ h1 {
 
 .review-text {
   margin-top: 0;
+}
+
+.add-review-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 40px;
+  font-weight: bold;
+  font-size: 1.1em;
 }

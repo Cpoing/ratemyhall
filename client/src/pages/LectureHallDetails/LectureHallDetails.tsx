@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ImageModal from "../../components/ImageModal/ImageModal";
 import { useUser } from "../../components/UserContext/UserContext";
 import { MdDeleteOutline } from "react-icons/md";
+import { PiNotePencilBold } from "react-icons/pi";
 import "./LectureHallDetails.css";
 
 const LectureHallDetails: React.FC = () => {
@@ -76,7 +77,7 @@ const LectureHallDetails: React.FC = () => {
           <div className="lecture-header">
             <h1>{name}</h1>
             <button className="add-review-button" onClick={handleClick}>
-              Add Review
+              <PiNotePencilBold /> &nbsp;Rate this hall
             </button>
           </div>
         </div>
