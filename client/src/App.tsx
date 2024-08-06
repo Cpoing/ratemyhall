@@ -7,6 +7,7 @@ import LectureHallDetails from "./pages/LectureHallDetails/LectureHallDetails";
 import AddReview from "./pages/addReview/addReview";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import AccountSettings from "./pages/AccountSettings/AccountSettings";
 import { UserProvider } from "./components/UserContext/UserContext";
 
 const App: React.FC = () => {
@@ -26,6 +27,7 @@ const App: React.FC = () => {
               <Route path="/add-review/:name" element={<AddReview />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/account-settings" element={<AccountSettings />} />
             </Routes>
           </div>
         </div>

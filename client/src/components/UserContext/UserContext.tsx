@@ -11,6 +11,7 @@ import Cookies from "js-cookie";
 interface User {
   name: string;
   userId: string;
+  email: string;
 }
 
 interface UserContextType {
@@ -28,7 +29,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     if (token) {
       try {
         const decodedToken: any = jwtDecode(token);
-        setUser({ name: decodedToken.name, userId: decodedToken.userId });
+        setUser({
+          name: decodedToken.name,
+          userId: decodedToken.userId,
+          email: decodedToken.email,
+        });
       } catch (err) {
         console.error("Failed to decode token", err);
         setUser(null);

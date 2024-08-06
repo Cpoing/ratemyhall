@@ -18,8 +18,8 @@ const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
   credentials: true,
-  origin: "https://www.ratemyhall.com",
-  //origin: "http://localhost:5173",
+  //origin: "https://www.ratemyhall.com",
+  origin: "http://localhost:5173",
 };
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -116,7 +116,7 @@ app.post("/api/login", async (req, res) => {
     }
 
     const token = jwt.sign(
-      { userId: user._id, name: user.name },
+      { userId: user._id, name: user.name, email: user.email },
       process.env.VITE_SECRET_KEY,
       { expiresIn: "1h" },
     );
@@ -124,7 +124,7 @@ app.post("/api/login", async (req, res) => {
     res.cookie("token", token, {
       sameSite: "None",
       secure: true,
-      domain: "ratemyhall.com",
+      //domain: "ratemyhall.com",
       maxAge: 360000,
     });
 
@@ -332,6 +332,34 @@ app.get("/api/search", async (req, res) => {
     res.json(searchResults);
   } catch (err) {
     console.error("Error searching lecture halls:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.get("/api/user-info", authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select("name email");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json({ name: user.name, email: user.email });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.delete("/api/delete-account", authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await user.deleteOne();
+    res.status(200).json({ message: "Account deleted success" });
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
