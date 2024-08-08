@@ -351,6 +351,24 @@ app.get("/api/user-info", authenticateToken, async (req, res) => {
 
 app.delete("/api/delete-account", authenticateToken, async (req, res) => {
   try {
+    const userId = req.user.userId;
+
+    const reviews = await Review.find({ userId });
+    if (reviews.length > 0) {
+      for (const review of reviews) {
+        if (review.imageName) {
+          const params = {
+            Bucket: process.env.VITE_BUCKET_NAME,
+            Key: review.imageName,
+          };
+          const command = new DeleteObjectCommand(params);
+          await s3.send(command);
+        }
+      }
+
+      await Review.deleteMany({ userId });
+    }
+
     const user = await User.findById(req.user.userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
