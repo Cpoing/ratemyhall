@@ -18,8 +18,8 @@ const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
   credentials: true,
-  //origin: "https://www.ratemyhall.com",
-  origin: "http://localhost:5173",
+  origin: "https://www.ratemyhall.com",
+  //origin: "http://localhost:5173",
 };
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -124,7 +124,7 @@ app.post("/api/login", async (req, res) => {
     res.cookie("token", token, {
       sameSite: "None",
       secure: true,
-      //domain: "ratemyhall.com",
+      domain: "ratemyhall.com",
       maxAge: 360000,
     });
 
@@ -332,6 +332,33 @@ app.get("/api/search", async (req, res) => {
     res.json(searchResults);
   } catch (err) {
     console.error("Error searching lecture halls:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.get("/api/user-reviews", authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const reviews = await Review.find({ userId });
+
+    const reviewsWithUrls = await Promise.all(
+      reviews.map(async (review) => {
+        if (review.imageName) {
+          const getObjectParams = {
+            Bucket: process.env.VITE_BUCKET_NAME,
+            Key: review.imageName,
+          };
+          const command = new GetObjectCommand(getObjectParams);
+          const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+          return { ...review.toObject(), imageUrl: url };
+        }
+        return review;
+      }),
+    );
+
+    res.json(reviewsWithUrls);
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
