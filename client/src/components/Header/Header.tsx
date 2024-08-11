@@ -61,7 +61,7 @@ const Header: React.FC = () => {
         {user ? (
           <div className="dropdown">
             <span className="welcome" onClick={toggleDropdown} ref={welcomeRef}>
-              Welcome, {user.name}
+              Welcome, {user.name} 👋
               <span className="dropdown-arrow">{<MdKeyboardArrowDown />}</span>
             </span>
             <div

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ImageModal from "../../components/ImageModal/ImageModal";
 import { useUser } from "../../components/UserContext/UserContext";
-import { MdDeleteOutline } from "react-icons/md";
+import ReviewCard from "../../components/ReviewCard/ReviewCard";
 import { PiNotePencilBold } from "react-icons/pi";
 import "./LectureHallDetails.css";
 
@@ -82,41 +82,13 @@ const LectureHallDetails: React.FC = () => {
         </div>
         <div className="reviews">
           {reviews.map((review, index) => (
-            <div key={index} className="review-card">
-              {review.imageUrl && (
-                <img
-                  src={review.imageUrl}
-                  alt="Review"
-                  className="review-image"
-                  onClick={() => handleImageClick(review.imageUrl)}
-                />
-              )}
-              <div className="header-content">
-                <div className="review-header">
-                  <div className="review-rating">
-                    {"★".repeat(Math.round(review.rating)) +
-                      "☆".repeat(5 - Math.round(review.rating))}{" "}
-                    {review.rating}/5
-                  </div>
-                  <div className="review-buttons-date">
-                    {user && review.userId._id === user.userId && (
-                      <MdDeleteOutline
-                        className="delete-review-button"
-                        onClick={() => handleDelete(review._id)}
-                      >
-                        Delete
-                      </MdDeleteOutline>
-                    )}
-                    <div className="review-date">
-                      {new Date(review.date).toLocaleDateString()}
-                    </div>
-                  </div>
-                </div>
-                <div className="review-content">
-                  <p>{review.text}</p>
-                </div>
-              </div>
-            </div>
+            <ReviewCard
+              key={index}
+              review={review}
+              user={user}
+              onDelete={handleDelete}
+              onImageClick={handleImageClick}
+            />
           ))}
         </div>
       </div>

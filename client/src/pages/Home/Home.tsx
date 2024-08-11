@@ -12,7 +12,7 @@ const Home: React.FC = () => {
       try {
         const response = await fetch(`${backendUrl}/api/lecture-halls`);
         const data = await response.json();
-        setBuildings(data.slice(0, 5));
+        setBuildings(data.slice(0, 6));
       } catch (error) {
         console.error("Error fetching buildings:", error);
       }
