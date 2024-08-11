@@ -80,17 +80,23 @@ const LectureHallDetails: React.FC = () => {
             </button>
           </div>
         </div>
-        <div className="reviews">
-          {reviews.map((review, index) => (
-            <ReviewCard
-              key={index}
-              review={review}
-              user={user}
-              onDelete={handleDelete}
-              onImageClick={handleImageClick}
-            />
-          ))}
-        </div>
+        {reviews.length === 0 ? (
+          <p className="empty">
+            😥 No reviews yet, be the first to review this lecture hall
+          </p>
+        ) : (
+          <div className="reviews">
+            {reviews.map((review, index) => (
+              <ReviewCard
+                key={index}
+                review={review}
+                user={user}
+                onDelete={handleDelete}
+                onImageClick={handleImageClick}
+              />
+            ))}
+          </div>
+        )}
       </div>
       {selectedImage && (
         <ImageModal imageUrl={selectedImage} onClose={handleCloseModal} />

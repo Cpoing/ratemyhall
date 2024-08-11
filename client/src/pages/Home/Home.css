@@ -60,3 +60,30 @@ h1 {
     height: 65px;
   }
 }
+
+.home-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  padding-bottom: 50px;
+}
+
+.home-info-image {
+  width: 310px;
+  height: auto;
+}
+
+.home-info-text {
+  width: 40%;
+}
+
+.column-image {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-info-text h3 {
+  font-size: 1.4em;
+}

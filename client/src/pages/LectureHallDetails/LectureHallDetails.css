@@ -59,6 +59,7 @@ h1 {
   border-radius: 5px;
   background-color: #f9f9f9;
   border: 1px solid gray;
+  box-shadow: 2px 2px #333333;
 }
 
 .review-header {
@@ -136,4 +137,11 @@ h1 {
   height: 40px;
   font-weight: bold;
   font-size: 1.1em;
+}
+
+.empty {
+  font-weight: bold;
+  padding: 10px;
+  padding-left: 30px;
+  font-size: 1.5em;
 }

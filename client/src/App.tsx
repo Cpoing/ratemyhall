@@ -8,7 +8,6 @@ import AddReview from "./pages/addReview/addReview";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import AccountSettings from "./pages/AccountSettings/AccountSettings";
-import Footer from "./components/Footer/Footer";
 import { UserProvider } from "./components/UserContext/UserContext";
 
 const App: React.FC = () => {
@@ -30,7 +29,6 @@ const App: React.FC = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/account-settings" element={<AccountSettings />} />
             </Routes>
-            <Footer />
           </div>
         </div>
       </Router>

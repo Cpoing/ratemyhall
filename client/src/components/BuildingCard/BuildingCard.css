@@ -10,6 +10,7 @@
   transition: background-color 0.3s ease;
   width: 80%;
   height: 70px;
+  box-shadow: 2px 2px #333333;
 }
 
 .building-card:hover {
