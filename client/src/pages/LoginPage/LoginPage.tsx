@@ -33,7 +33,7 @@ const LoginPage: React.FC = () => {
         console.log("User logged in successfully");
         setError("");
 
-        setUser({ name: data.name, userId: data.userId });
+        setUser({ name: data.name, userId: data.userId, email: data.email });
 
         navigate("/");
       } else {

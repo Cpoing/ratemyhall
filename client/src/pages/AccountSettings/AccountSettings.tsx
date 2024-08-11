@@ -36,6 +36,7 @@ const AccountSettings: React.FC = () => {
         } else {
           const errorData = await response.json();
           setError(errorData.message);
+          console.error(error);
         }
       } catch (err) {
         console.error("Error fetching user info:", err);
