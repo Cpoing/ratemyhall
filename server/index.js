@@ -162,7 +162,7 @@ app.post(
   upload.single("image"),
   async (req, res) => {
     const { hallName, rating, text } = req.body;
-    const imageName = randomImageName();
+    const imageName = req.file ? randomImageName() : null;
     const image = req.file;
 
     if (!text) {
@@ -245,16 +245,19 @@ app.get("/api/reviews/:hallName", async (req, res) => {
 
     const reviewsWithUrls = await Promise.all(
       reviews.map(async (review) => {
-        const getObjectParams = {
-          Bucket: process.env.VITE_BUCKET_NAME,
-          Key: review.imageName,
-        };
-        const command = new GetObjectCommand(getObjectParams);
-        const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-        return {
-          ...review.toObject(),
-          imageUrl: url,
-        };
+        if (review.imageName) {
+          const getObjectParams = {
+            Bucket: process.env.VITE_BUCKET_NAME,
+            Key: review.imageName,
+          };
+          const command = new GetObjectCommand(getObjectParams);
+          const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+          return {
+            ...review.toObject(),
+            imageUrl: url,
+          };
+        }
+        return review.toObject();
       }),
     );
 
@@ -352,7 +355,7 @@ app.get("/api/user-reviews", authenticateToken, async (req, res) => {
           const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
           return { ...review.toObject(), imageUrl: url };
         }
-        return review;
+        return review.toObject();
       }),
     );
 
