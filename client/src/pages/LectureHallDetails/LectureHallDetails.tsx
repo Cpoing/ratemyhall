@@ -11,22 +11,37 @@ const LectureHallDetails: React.FC = () => {
   const { user } = useUser();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [reviews, setReviews] = useState<any[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
   const navigate = useNavigate();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch(`${backendUrl}/api/reviews/${name}`);
+        const response = await fetch(
+          `${backendUrl}/api/reviews/${name}?page=${page}&limit=6`,
+        );
         const data = await response.json();
-        setReviews(data);
+
+        if (data.length < 6) {
+          setHasMore(false);
+        }
+
+        setReviews((prevReviews) => {
+          const existingIds = new Set(prevReviews.map((review) => review._id));
+          const newReviews = data.filter(
+            (review: any) => !existingIds.has(review._id),
+          );
+          return [...prevReviews, ...newReviews];
+        });
       } catch (err) {
         console.error("Error fetching reviews:", err);
       }
     };
 
     fetchReviews();
-  }, [name]);
+  }, [name, page]);
 
   const handleClick = () => {
     if (user) {
@@ -56,7 +71,9 @@ const LectureHallDetails: React.FC = () => {
         });
 
         if (response.ok) {
-          setReviews(reviews.filter((review) => review._id !== reviewId));
+          setReviews((prevReviews) =>
+            prevReviews.filter((review) => review._id !== reviewId),
+          );
         } else {
           const errorData = await response.json();
           console.error(`Error: ${errorData.message}`);
@@ -66,6 +83,12 @@ const LectureHallDetails: React.FC = () => {
         console.error("Error deleting review:", err);
         alert("Error deleting review");
       }
+    }
+  };
+
+  const handleLoadMore = () => {
+    if (hasMore) {
+      setPage((prevPage) => prevPage + 1);
     }
   };
 
@@ -95,6 +118,11 @@ const LectureHallDetails: React.FC = () => {
                 onImageClick={handleImageClick}
               />
             ))}
+            {hasMore && (
+              <button className="load-more-button" onClick={handleLoadMore}>
+                Load More
+              </button>
+            )}
           </div>
         )}
       </div>

@@ -239,9 +239,15 @@ app.delete("/api/reviews/:id", authenticateToken, async (req, res) => {
 
 app.get("/api/reviews/:hallName", async (req, res) => {
   const { hallName } = req.params;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 6;
+  const skip = (page - 1) * limit;
 
   try {
-    const reviews = await Review.find({ hallName }).populate("userId", "name");
+    const reviews = await Review.find({ hallName })
+      .skip(skip)
+      .limit(limit)
+      .populate("userId", "name");
 
     const reviewsWithUrls = await Promise.all(
       reviews.map(async (review) => {
