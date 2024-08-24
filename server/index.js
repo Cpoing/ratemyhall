@@ -18,8 +18,8 @@ const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
   credentials: true,
-  //origin: "https://www.ratemyhall.com",
-  origin: "http://localhost:5173",
+  origin: "https://www.ratemyhall.com",
+  //origin: "http://localhost:5173",
 };
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -124,7 +124,7 @@ app.post("/api/login", async (req, res) => {
     res.cookie("token", token, {
       sameSite: "None",
       secure: true,
-      //domain: "ratemyhall.com",
+      domain: "ratemyhall.com",
       maxAge: 360000,
     });
 
