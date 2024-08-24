@@ -30,33 +30,37 @@ const Home: React.FC = () => {
           <h1>Enter your Lecture Hall</h1>
           <SearchBar />
         </div>
-        <div className="building-list">
-          {buildings.map((building) => (
-            <BuildingCard
-              key={building.id}
-              id={building.id}
-              name={building.name}
-              rating={building.averageRating}
-              reviews={building.reviewCount}
-            />
-          ))}
+      </div>
+
+      <div className="building-list">
+        {buildings.map((building) => (
+          <BuildingCard
+            key={building.id}
+            id={building.id}
+            name={building.name}
+            rating={building.averageRating}
+            reviews={building.reviewCount}
+          />
+        ))}
+      </div>
+      <div className="home-info">
+        <div className="column-image">
+          <img src={homeImage} className="home-info-image" />
+          <a
+            href="https://www.freepik.com/free-vector/students-studying-textbooks_7732667.htm#fromView=image_search_similar&page=1&position=0&uuid=3dda194a-59f6-43d6-8ac1-e9dc16c7ee1e"
+            className="copyright"
+          >
+            Image by pch.vector on Freepik
+          </a>
         </div>
-        <div className="home-info">
-          <div className="column-image">
-            <img src={homeImage} className="home-info-image" />
-            <a href="https://www.freepik.com/free-vector/students-studying-textbooks_7732667.htm#fromView=image_search_similar&page=1&position=0&uuid=3dda194a-59f6-43d6-8ac1-e9dc16c7ee1e">
-              Image by pch.vector on Freepik
-            </a>
-          </div>
-          <div className="home-info-text">
-            <h3>Leave a review</h3>
-            <p>
-              Want to make a change in your lecture hall? Leave a review and let
-              others know! This platform gives notice about various issues
-              students may have within their learning environments, or just
-              leave a review about a particularly good lecture hall too!
-            </p>
-          </div>
+        <div className="home-info-text">
+          <h3>Leave a review</h3>
+          <p>
+            Want to make a change in your lecture hall? Leave a review and let
+            others know! This platform gives notice about various issues
+            students may have within their learning environments, or just leave
+            a review about a particularly good lecture hall too!
+          </p>
         </div>
       </div>
     </div>

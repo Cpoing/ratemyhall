@@ -11,6 +11,7 @@
 .lecture-divider {
   background: #333;
   padding-bottom: 10px;
+  border-radius: 8px;
 }
 
 .lecture-header {

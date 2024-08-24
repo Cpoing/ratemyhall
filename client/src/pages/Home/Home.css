@@ -20,7 +20,7 @@ h1 {
 
 .building-list {
   width: 80%;
-  margin-top: 21vh;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -86,4 +86,12 @@ h1 {
 
 .home-info-text h3 {
   font-size: 1.4em;
+}
+
+.copyright {
+  text-decoration: none;
+}
+
+.copyright:visited {
+  color: #333333;
 }

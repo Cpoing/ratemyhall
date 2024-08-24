@@ -1,20 +1,22 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home/Home";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Header from "./components/Header/Header";
-import SearchResults from "./pages/searchResults/searchResults";
-import LectureHallDetails from "./pages/LectureHallDetails/LectureHallDetails";
-import AddReview from "./pages/addReview/addReview";
-import RegisterPage from "./pages/RegisterPage/RegisterPage";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import AccountSettings from "./pages/AccountSettings/AccountSettings";
 import { UserProvider } from "./components/UserContext/UserContext";
+import AccountSettings from "./pages/AccountSettings/AccountSettings";
+import Home from "./pages/Home/Home";
+import LectureHallDetails from "./pages/LectureHallDetails/LectureHallDetails";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import AddReview from "./pages/addReview/addReview";
+import Footer from "./components/Footer/Footer";
+import SearchResults from "./pages/searchResults/searchResults";
+import "./App.css";
 
 const App: React.FC = () => {
   return (
-    <UserProvider>
-      <Router>
-        <div className="app-wrapper">
+    <div className="app">
+      <UserProvider>
+        <Router>
           <Header />
           <div className="content">
             <Routes>
@@ -30,9 +32,11 @@ const App: React.FC = () => {
               <Route path="/account-settings" element={<AccountSettings />} />
             </Routes>
           </div>
-        </div>
-      </Router>
-    </UserProvider>
+          <Footer />
+        </Router>
+      </UserProvider>
+    </div>
   );
 };
+
 export default App;

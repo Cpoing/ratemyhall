@@ -1,16 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 body,
-html,
-#root {
+html {
   margin: 0;
   padding: 0;
-  height: 100%;
   background: #fff5ee;
   font-family: "Montserrat", sans-serif;
-}
-
-.app-wrapper {
-  position: relative;
-  min-height: 100vh;
+  min-height: 100%;
+  height: 100vh;
 }
