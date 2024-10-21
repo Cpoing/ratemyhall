@@ -122,13 +122,13 @@ const AccountSettings: React.FC = () => {
           <div className="account-settings">
             {user && (
               <div>
-                <p>
+                <p className="account-settings-display">
                   <strong>Name:</strong> {name}
                 </p>
-                <p>
+                <p className="account-settings-display">
                   <strong>Email:</strong> {email}
                 </p>
-                <p>
+                <p className="account-settings-display">
                   <strong>Password:</strong> ********
                 </p>
                 <button

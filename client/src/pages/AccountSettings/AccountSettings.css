@@ -19,12 +19,15 @@
 }
 
 .account-settings-nav button:hover {
-  color: #f0db4f;
+  color: #fff5ee;
   -webkit-transition: color 0.2s;
   -moz-transition: color 0.2s;
   -ms-transition: color 0.2s;
   -o-transition: color 0.2s;
   transition: color 0.2s;
+}
+.account-settings-display {
+  margin-bottom: 20px;
 }
 
 .account-content {
@@ -34,11 +37,16 @@
 }
 
 .delete-account-button {
-  background-color: red;
-  color: white;
-  border: none;
+  color: #333333;
+  border: 1px solid red;
   padding: 10px;
   cursor: pointer;
+  background: transparent;
+  font-weight: bold;
+}
+
+.delete-account-button:hover {
+  background: red;
 }
 
 .account-divider {
